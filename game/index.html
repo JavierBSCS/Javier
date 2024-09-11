@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Scramble Game</title>
+    <style>
+        /* Basic CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        p {
+            font-size: 18px;
+        }
+
+        #scrambled-word {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #message {
+            font-size: 18px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Word Scramble Game</h1>
+    <p>Solve the scrambled word!</p>
+    <p id="scrambled-word"></p>
+    <input type="text" id="guess-input" placeholder="Enter your guess">
+    <button id="guess-button">Submit Guess</button>
+    <p id="message"></p>
+    
+    <script>
+        // List of words
+        const words = ['javascript', 'programming', 'developer', 'function', 'variable'];
+
+        // Function to select a random word from the list
+        function getRandomWord() {
+            const randomIndex = Math.floor(Math.random() * words.length);
+            return words[randomIndex];
+        }
+
+        // Function to scramble the letters of a word
+        function scrambleWord(word) {
+            let scrambled = word.split('');
+            for (let i = scrambled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [scrambled[i], scrambled[j]] = [scrambled[j], scrambled[i]]; // Swap letters
+            }
+            return scrambled.join('');
+        }
+
+        // Initialize game
+        let originalWord = getRandomWord();
+        let scrambledWord = scrambleWord(originalWord);
+
+        document.getElementById('scrambled-word').textContent = scrambledWord;
+
+        // Handle guess
+        document.getElementById('guess-button').addEventListener('click', () => {
+            const guess = document.getElementById('guess-input').value.trim().toLowerCase();
+            if (guess === originalWord) {
+                document.getElementById('message').textContent = 'Correct! You guessed the word!';
+            } else {
+                document.getElementById('message').textContent = 'Wrong guess. Try again!';
+            }
+        });
+    </script>
+</body>
+</html>
